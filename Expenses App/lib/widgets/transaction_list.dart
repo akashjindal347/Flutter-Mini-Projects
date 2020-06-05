@@ -1,66 +1,63 @@
 import 'package:flutter/material.dart';
-import 'package:testApp/widgets/user_transactions.dart';
 import '../models/transaction.dart';
 import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
- 
   List<Transaction> userTransactions;
- 
- TransactionList(this.userTransactions);
+  final Function deleteTransaction;
+
+  TransactionList(this.userTransactions, this.deleteTransaction);
 //  print(userTransactions);
 
   @override
   Widget build(BuildContext context) {
-    return  Container(
-      height: 320,
-      child: ListView.builder(
-            itemBuilder: (ctx,index){
-              return Card(
-                child: Row(
-                  children: <Widget>[
-                    Container(
-                      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-                      child: Text(
-                        ' \$${userTransactions[index].amount.toStringAsFixed(2)}',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                          color: Theme.of(context).primaryColor,
-                        ),
-                      ),
-                      decoration: BoxDecoration(
-                          border: Border.all(color: Colors.black, width: 2)),
-                      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-                    ),
-                    Container(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          Text(
-                            userTransactions[index].title,
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Padding(padding: EdgeInsets.symmetric(vertical: 2)),
-                          Text(
-                            DateFormat.yMMMMd("en_US").format(userTransactions[index].date),
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    )
-                  ],
+    return userTransactions.isEmpty
+        ? Container(
+          margin: EdgeInsets.symmetric(vertical:10),
+          child: Center(
+              
+              child: Text(
+                "No Transactions",
+                // textDirection: TextDirection.ltr,
+                style: TextStyle(
+                  fontSize: 20,
+                  fontWeight:FontWeight.bold,
+                  color: Colors.black87,
                 ),
-              );
-            },
-            itemCount: userTransactions.length,
-          ),
-    );
+              ),
+            ),
+        )
+        : Container(
+            height: 550,
+            child: ListView.builder(
+              itemBuilder: (ctx, index) {
+                return Card(
+                  margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
+                  elevation: 5,
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      child: Padding(
+                          padding: EdgeInsets.all(6),
+                          child: FittedBox(
+                              child:
+                                  Text('\$${userTransactions[index].amount}'))),
+                    ),
+                    title: Text(
+                      userTransactions[index].title,
+                      style: TextStyle(color: Colors.black),
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMd().format(userTransactions[index].date),
+                    ),
+                    trailing: IconButton(
+                        icon: Icon(Icons.delete),
+                        onPressed: () =>
+                            {deleteTransaction(userTransactions[index].id)}),
+                  ),
+                );
+              },
+              itemCount: userTransactions.length,
+            ),
+          );
   }
 }
