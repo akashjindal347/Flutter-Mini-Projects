@@ -3,19 +3,18 @@ import '../models/transaction.dart';
 import 'package:intl/intl.dart';
 
 class TransactionList extends StatelessWidget {
-  List<Transaction> userTransactions;
-  final Function deleteTransaction;
+  final List<Transaction> _userTransactions;
+  final Function _deleteTransaction;
 
-  TransactionList(this.userTransactions, this.deleteTransaction);
+  TransactionList(this._userTransactions, this._deleteTransaction);
 //  print(userTransactions);
 
   @override
   Widget build(BuildContext context) {
-    return userTransactions.isEmpty
+    return _userTransactions.isEmpty
         ? Container(
             margin: EdgeInsets.symmetric(vertical: 10),
-            child: Center(
-              child: Text(
+            child: Text(
                 "No Transactions",
                 // textDirection: TextDirection.ltr,
                 style: TextStyle(
@@ -23,15 +22,13 @@ class TransactionList extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
-              ),
+              
             ),
           )
-        : Container(
-            height: 550,
-            child: ListView.builder(
+        :  ListView.builder(
               itemBuilder: (ctx, index) {
                 return Padding(
-                  padding: EdgeInsets.all(10),
+                  padding: EdgeInsets.symmetric(horizontal: 10),
                   child: Card(
                     margin: EdgeInsets.symmetric(vertical: 8, horizontal: 5),
                     elevation: 5,
@@ -41,25 +38,25 @@ class TransactionList extends StatelessWidget {
                             padding: EdgeInsets.all(6),
                             child: FittedBox(
                                 child: Text(
-                                    '\$${userTransactions[index].amount}'))),
+                                    '\$${_userTransactions[index].amount}'))),
                       ),
                       title: Text(
-                        userTransactions[index].title,
-                        style: TextStyle(color: Colors.black),
+                        _userTransactions[index].title,
+                        style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                        DateFormat.yMd().format(userTransactions[index].date),
+                        DateFormat.yMd().format(_userTransactions[index].date),
                       ),
                       trailing: IconButton(
                           icon: Icon(Icons.delete),
                           onPressed: () =>
-                              {deleteTransaction(userTransactions[index].id)}),
+                              {_deleteTransaction(_userTransactions[index].id)}),
                     ),
                   ),
                 );
               },
-              itemCount: userTransactions.length,
-            ),
+              itemCount: _userTransactions.length,
+            
           );
   }
 }

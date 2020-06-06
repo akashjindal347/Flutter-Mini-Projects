@@ -1,11 +1,32 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:testApp/widgets/chart.dart';
 import 'package:testApp/widgets/new_transaction.dart';
 import 'package:testApp/widgets/transaction_list.dart';
 import './models/transaction.dart';
 
 void main() {
-  runApp(MyApp());
+  // WidgetsFlutterBinding.ensureInitialized();
+  // SystemChrome.setPreferredOrientations([
+  //   DeviceOrientation.portraitUp,
+  //   DeviceOrientation.portraitDown
+  // ]);
+  runApp(HomePage());
+}
+class HomePage extends StatelessWidget{
+
+  @override
+  Widget build(BuildContext context) {
+    // TODO: implement build
+    return MaterialApp(
+      theme: ThemeData(
+        primarySwatch: Colors.red,
+        fontFamily: 'Quicksand',
+      ),
+      home: MyApp(),
+
+    );
+  }
 }
 
 class MyApp extends StatefulWidget {
@@ -59,38 +80,48 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primarySwatch: Colors.red,
-        fontFamily: 'Quicksand',
+    final isPotrait = MediaQuery.of(context).orientation == Orientation.portrait;
+
+    final appBar = AppBar(
+      title: Text(
+        "Expenses App",
+        style: TextStyle(fontFamily: 'OpenSans', fontWeight: FontWeight.bold),
       ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text(
-            "Expenses App",
-            style:
-                TextStyle(fontFamily: 'OpenSans', fontWeight: FontWeight.bold),
-          ),
-          // backgroundColor: Colors.red,
-          actions: <Widget>[
-            Builder(builder: (context) {
-              return IconButton(
-                  icon: Icon(Icons.add),
-                  onPressed: () => _startAddTransaction(context));
-            })
-          ],
-        ),
+      // backgroundColor: Colors.red,
+      actions: <Widget>[
+        Builder(builder: (context) {
+          return IconButton(
+              icon: Icon(Icons.add),
+              onPressed: () => _startAddTransaction(context));
+        })
+      ],
+    );
+    return  Scaffold(
+        appBar: appBar,
         body: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              // mainAxisAlignment: MainAxisAlignment.center,
-              // crossAxisAlignment: CrossAxisAlignment.center,
-              children: <Widget>[
-                Chart(recentTransactions),
-                TransactionList(userTransactions, deleteTransaction),
-              ],
-            ),
-          ),
+          child: Builder(builder: (context) {
+            return Container(
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.center,
+                children: <Widget>[
+                isPotrait ? Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appBar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.25,
+                      child: Chart(recentTransactions)):Container(),
+                  Container(
+                      height: (MediaQuery.of(context).size.height -
+                              appBar.preferredSize.height -
+                              MediaQuery.of(context).padding.top) *
+                          0.65,
+                      child:
+                          TransactionList(userTransactions, deleteTransaction)),
+                ],
+              ),
+            );
+          }),
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
         floatingActionButton: Builder(builder: (context) {
@@ -99,7 +130,9 @@ class _MyAppState extends State<MyApp> {
             child: Icon(Icons.add),
           );
         }),
-      ),
+      
     );
   }
 }
+
+
