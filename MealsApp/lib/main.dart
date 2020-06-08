@@ -1,6 +1,8 @@
 import 'package:MealsApp/screens/categories_screens.dart';
 import 'package:MealsApp/screens/category_meals_screen.dart';
+import 'package:MealsApp/screens/favourite_screen.dart';
 import 'package:MealsApp/screens/meal_detail_screen.dart';
+import 'package:MealsApp/screens/tabs_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -28,7 +30,7 @@ class MyApp extends StatelessWidget {
           ),
           headline6: TextStyle(
             fontSize: 20,
-            fontFamily: 'RobotoCondensed',
+            fontFamily: 'Raleway',
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -37,9 +39,10 @@ class MyApp extends StatelessWidget {
       // home: CategoryScreens(),
       initialRoute: '/',
       routes: {
-        '/': (ctx)=>CategoryScreens(),
+        '/': (ctx)=>TabsScreen(),
         '/category-meals': (ctx)=>CategoryMealsScreen(),
         MealDetailScreen.routeName: (ctx)=>MealDetailScreen(),
+        FavouriteScreen.routeName: (ctx)=>FavouriteScreen(),
       },
       onGenerateRoute: (settings){
         return MaterialPageRoute(builder: (ctx)=>CategoryScreens());

@@ -5,10 +5,7 @@ import 'package:flutter/material.dart';
 class CategoryScreens extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-
-      appBar: AppBar(title: const Text("Meals App"),),
-      body: GridView(
+    return GridView(
         padding: const EdgeInsets.all(25),
         gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
           maxCrossAxisExtent: 200,
@@ -21,7 +18,7 @@ class CategoryScreens extends StatelessWidget {
               .map((catData) => CategoryItem(catData.id,catData.title, catData.color))
               .toList(),
         ],
-      ),
+    
     );
   }
 }
