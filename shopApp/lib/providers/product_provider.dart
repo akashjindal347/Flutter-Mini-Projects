@@ -40,4 +40,16 @@ class Products with ChangeNotifier {
   List<Product> get items {
     return [..._items];
   }
+
+  void addProduct(Product product) {
+    final newProduct = Product(
+      title: product.title,
+      description: product.description,
+      price: product.price,
+      imageUrl: product.imageUrl,
+      id: DateTime.now().toString(),
+    );
+    _items.add(newProduct);
+    notifyListeners();
+  }
 }

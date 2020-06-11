@@ -10,7 +10,7 @@ class ProductOverviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: appDrawer(),
+      drawer: AppDrawer(),
       appBar: AppBar(
         title: Text("Products"),
         actions: <Widget>[
