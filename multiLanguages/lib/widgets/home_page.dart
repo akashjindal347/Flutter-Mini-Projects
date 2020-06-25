@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
             child: DropdownButton(
               icon: Icon(
                 Icons.language,
-                color: Colors.white,
+                color: Theme.of(context).accentColor,
               ),
               items: Language.languagesList()
                   .map<DropdownMenuItem<Language>>((lang) => DropdownMenuItem(
@@ -78,7 +78,8 @@ class _HomePageState extends State<HomePage> {
             Text(
               DemoLocalization.of(context)
                   .getTranslatedValues('personal_information'),
-              style: TextStyle(fontSize: 20, color: Colors.blue),
+              style: TextStyle(
+                  fontSize: 20, color: Theme.of(context).primaryColor),
             ),
             Text('English Hindi Arabic Persian'),
           ],

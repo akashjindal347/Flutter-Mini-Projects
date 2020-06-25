@@ -10,7 +10,6 @@ class AppDrawer extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(title: Text('Multi Languages App')),
         body: Container(
-          color: Colors.white,
           child: Column(
             children: <Widget>[
               ListTile(
