@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+import 'package:multiLanguages/localization/demo_localization.dart';
+import 'package:multiLanguages/main.dart';
 import 'package:multiLanguages/models/language.dart';
 import 'package:multiLanguages/widgets/AppDrawer.dart';
 
@@ -12,6 +14,24 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   void _changeLanguage(Language language) {
+    Locale _temp;
+    switch (language.languageCode) {
+      case "en":
+        _temp = Locale(language.languageCode, "US");
+        break;
+      case "hi":
+        _temp = Locale(language.languageCode, "IN");
+        break;
+      case "fa":
+        _temp = Locale(language.languageCode, "IR");
+        break;
+      case "ar":
+        _temp = Locale(language.languageCode, "SA");
+        break;
+      default:
+        _temp = Locale(language.languageCode, "US");
+    }
+    MyApp.setLocale(context, _temp);
     print(language.languageCode);
   }
 
@@ -20,7 +40,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       drawer: AppDrawer(),
       appBar: AppBar(
-        title: Text('Home Page'),
+        title:
+            Text(DemoLocalization.of(context).getTranslatedValues('home_page')),
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -51,7 +72,17 @@ class _HomePageState extends State<HomePage> {
         ],
       ),
       body: Center(
-        child: Text('English Hindi'),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              DemoLocalization.of(context)
+                  .getTranslatedValues('personal_information'),
+              style: TextStyle(fontSize: 20, color: Colors.blue),
+            ),
+            Text('English Hindi Arabic Persian'),
+          ],
+        ),
       ),
     );
   }
